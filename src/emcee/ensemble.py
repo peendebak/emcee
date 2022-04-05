@@ -466,10 +466,8 @@ class EnsembleSampler(object):
         p = coords
 
         # Check that the parameters are in physical ranges.
-        if np.any(np.isinf(p)):
-            raise ValueError("At least one parameter value was infinite")
-        if np.any(np.isnan(p)):
-            raise ValueError("At least one parameter value was NaN")
+        if not np.isfinite(np.max(p)):
+            raise ValueError("At least one parameter value was infinite or NaN")
 
         # If the parmaeters are named, then switch to dictionaries
         if self.params_are_named:
